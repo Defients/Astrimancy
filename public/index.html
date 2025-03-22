@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#13121E" />
+    <meta
+      name="description"
+      content="Explore the cosmic deck of Astrimancy Cards and discover insights into your journey."
+    />
+    <meta
+      name="keywords"
+      content="astrimancy, tarot, cards, divination, cosmic"
+    />
+    <meta name="author" content="Astrimancy" />
+
+    <title>Astrimancy Cards Explorer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Josefin+Sans:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link href="/styles/styles.css" rel="stylesheet" />
+    <link href="/styles/main.css" rel="stylesheet" />
+
+    <!-- Preload critical images -->
+    <link rel="preload" as="image" href="/astrimancy-name.png" />
+
+    <style>
+      /* Critical CSS for initial loading */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Josefin Sans", sans-serif;
+        background-color: #13121e;
+        color: #e2e8f0;
+        background-image: radial-gradient(
+            circle at 20% 30%,
+            rgba(61, 41, 107, 0.2) 0%,
+            rgba(0, 0, 0, 0) 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(83, 36, 99, 0.2) 0%,
+            rgba(0, 0, 0, 0) 50%
+          ),
+          radial-gradient(
+            circle at 50% 70%,
+            rgba(31, 58, 147, 0.2) 0%,
+            rgba(0, 0, 0, 0) 50%
+          );
+        background-attachment: fixed;
+        min-height: 100vh;
+        transition: all 0.3s ease;
+      }
+
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #13121e;
+        z-index: 9999;
+      }
+
+      .loading-title {
+        font-family: "Cinzel Decorative", serif;
+        font-weight: 700;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        color: #e2e8f0;
+        text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+        animation: pulse 2s infinite;
+      }
+
+      .loader {
+        width: 60px;
+        height: 60px;
+        border: 4px solid rgba(147, 51, 234, 0.2);
+        border-radius: 50%;
+        border-top-color: #9333ea;
+        animation: spin 1s linear infinite;
+      }
+
+      .stars-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .star {
+        position: absolute;
+        background-color: white;
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out alternate;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 0.8;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.8;
+        }
+      }
+
+      @keyframes twinkle {
+        from {
+          opacity: 0.2;
+        }
+        to {
+          opacity: 0.7;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript
+      >You need to enable JavaScript to run the Astrimancy Cards
+      Explorer.</noscript
+    >
+
+    <!-- Loading screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="stars-container" id="loading-stars"></div>
+      <h1 class="loading-title">ASTRIMANCY</h1>
+      <div class="loader"></div>
+      <p id="loading-message">Loading the cosmic deck...</p>
+    </div>
+
+    <!-- Root element for React -->
+    <div id="root"></div>
+
+    <!-- Script to create stars for loading screen -->
+    <script>
+      function createStars() {
+        const container = document.getElementById("loading-stars");
+        const starCount = 100;
+
+        for (let i = 0; i < starCount; i++) {
+          const star = document.createElement("div");
+          const size = 0.5 + Math.random() * 2;
+
+          star.className = "star";
+          star.style.width = `${size}px`;
+          star.style.height = `${size}px`;
+          star.style.left = `${Math.random() * 100}%`;
+          star.style.top = `${Math.random() * 100}%`;
+          star.style.animationDuration = `${1 + Math.random() * 5}s`;
+          star.style.animationDelay = `${Math.random() * 5}s`;
+
+          container.appendChild(star);
+        }
+      }
+
+      // Create stars on load
+      document.addEventListener("DOMContentLoaded", createStars);
+
+      // Hide loading screen when app is ready
+      window.addEventListener("load", function () {
+        // Give a little extra time for the app to initialize
+        setTimeout(function () {
+          const loadingScreen = document.getElementById("loading-screen");
+          if (loadingScreen) {
+            loadingScreen.style.opacity = "0";
+            loadingScreen.style.transition = "opacity 0.5s ease";
+
+            setTimeout(function () {
+              loadingScreen.style.display = "none";
+            }, 500);
+          }
+        }, 1500);
+      });
+    </script>
+
+    <!-- App initialization -->
+    <script>
+      // Global configuration
+      window.AstrimancyConfig = {
+        appVersion: "1.0.0",
+        baseUrl: window.location.origin,
+        apiEndpoint: "/api",
+      };
+    </script>
+  </body>
+</html>
